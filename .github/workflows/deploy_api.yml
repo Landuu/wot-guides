@@ -37,7 +37,7 @@ jobs:
       with:
         server: s1.ct8.pl
         username: f13406_wotg-api
-        password: ${{ secrets.ftp_password }}
+        password: ${{ secrets.FTP_PASSWORD }}
         local-dir: "./api/"
         server-dir: "public_nodejs/"
         exclude: |
