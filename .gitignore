@@ -36,3 +36,4 @@ api/.env.local
 api/.env.development.local
 api/.env.test.local
 api/.env.production.local
+api/.env
