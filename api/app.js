@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
     res.json(data);
 });
 
-app.use('/api', router);
+app.use('/', router);
 router.use('/tanks', routes.tanks);
 
 app.listen(port, () => {
