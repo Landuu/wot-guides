@@ -4,11 +4,17 @@ name: Deploy API
 
 # Controls when the workflow will run
 on:
-  push:
-    paths:
-      - api/**
-    branches-ignore:
+  pull_request:
+    branches:
       - main
+    paths:
+      - 'api/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'api/**'
+
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -16,7 +22,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   web-deploy:
-    name: 🎉 Deploy
+    name: 🧶 Deploy API
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
