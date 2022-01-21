@@ -22,7 +22,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   web-deploy:
-    name: 🧶 Deploy API
+    name: ⚛️ Deploy React app
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
@@ -40,6 +40,7 @@ jobs:
 
     - name: 🧱 Build app
       run: |
+        cd frontend
         npm run build
     
     - name: 📂 Sync files
