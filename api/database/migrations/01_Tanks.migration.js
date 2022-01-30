@@ -1,6 +1,8 @@
 import db from '../../database.js';
-import { checkAndDrop } from './base.js';
+import { checkAndDrop } from '../base.js';
 
+
+const connection = await db.getConnection();
 const tableName = 'tanks';
 const table = `
     CREATE TABLE ${tableName} (
@@ -12,13 +14,14 @@ const table = `
     );
 `;
 
-const allowToCreate = await checkAndDrop(tableName);
+const allowToCreate = await checkAndDrop(connection, tableName);
 
 if(allowToCreate) {
-    const res = await db.execute(table);
+    await connection.execute(table);
     console.log('Migracja zakończona');
 } else {
     console.log('Migracja zakończona niepowodzeniem');
 }
 
+connection.release();
 db.end();

@@ -1,4 +1,3 @@
-import db from '../../database.js';
 import prompt from 'prompt';
 
 export const hasTable = async (connection, tableName) => {
@@ -24,9 +23,8 @@ export const hasAnyData = async (connection, tableName) => {
 }
 
 
-export const checkAndDrop = async tableName => {
+export const checkAndDrop = async (connection, tableName) => {
     const dropSql = `DROP TABLE IF EXISTS ${tableName};`;
-    const connection = await db.getConnection();
     const allowToQuery = await hasTable(connection, tableName);
     if(!allowToQuery) {
         console.log(`Nie znaleziono tabeli o nazwie: ${tableName}`);
