@@ -27,21 +27,34 @@ export const checkAndDrop = async (connection, tableName) => {
     const dropSql = `DROP TABLE IF EXISTS ${tableName};`;
     const allowToQuery = await hasTable(connection, tableName);
     if(!allowToQuery) {
-        console.log(`Nie znaleziono tabeli o nazwie: ${tableName}`);
+        console.log(`Nie znaleziono tabeli |${tableName}|`);
         return 1;
     }
+
+    console.log(`Znaleziono tabelę |${tableName}|...`)
 
     const allowToDrop = await hasAnyData(connection, tableName);
     if(!allowToDrop) {
         console.log(`Operacja 'DROP TABLE ${tableName}' została zatrzymana`);
-        db.end();
         return 0;
     }
 
-    (await connection).execute(dropSql);
-    console.log(`Polecenie DROP TABLE ${tableName} wykonano pomyślnie`);
-    (await connection).release();
+    console.log(`Usuwanie tabeli |${tableName}|...`);
+
+    await connection.execute(dropSql);
     return 1;
 }
 
-export default {hasTable, hasAnyData, checkAndDrop};
+export const newMigration = async (connection, tableName, tableSql) => {
+    const allowToCreate = await checkAndDrop(connection, tableName);
+
+    if(!allowToCreate) {
+        console.log(`Migracja tabeli |${tableName}| zakończona niepowodzeniem.`);
+        return;
+    }
+
+    await connection.execute(tableSql);
+    console.log(`Migracja tabeli |${tableName}| zakończona.`);
+}
+
+export default { hasTable, hasAnyData, checkAndDrop, newMigration };
